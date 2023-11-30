@@ -4,7 +4,6 @@
  * LoginSocialPinterest
  *
  */
-import { PASS_CORS_KEY } from 'helper/constants';
 import React, { memo, useCallback, useEffect } from 'react';
 import { IResolveParams, objectType } from '..';
 
@@ -25,7 +24,6 @@ interface Props {
 
 const PINTEREST_URL: string = 'https://www.pinterest.com/oauth';
 const PINTEREST_URL_API: string = 'https://api.pinterest.com/v5';
-const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
 
 export const LoginSocialPinterest = ({
   state = '',
@@ -53,11 +51,10 @@ export const LoginSocialPinterest = ({
 
   const getProfile = useCallback(
     (data: objectType) => {
-      fetch(`${PREVENT_CORS_URL}/${PINTEREST_URL_API}/user_account`, {
+      fetch(`${PINTEREST_URL_API}/user_account`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${data.access_token}`,
-          'x-cors-grida-api-key': PASS_CORS_KEY,
+          Authorization: `Bearer ${data.access_token}`
         },
       })
         .then(res => res.json())
@@ -87,13 +84,12 @@ export const LoginSocialPinterest = ({
         formBody = formBody.join('&');
 
         const data = await fetch(
-          `${PREVENT_CORS_URL}/${PINTEREST_URL_API}/oauth/token`,
+          `${PINTEREST_URL_API}/oauth/token`,
           {
             method: 'POST',
             headers: {
               Authorization: `Basic ${btoa(client_id + ':' + client_secret)}`,
               'Content-Type': 'application/x-www-form-urlencoded',
-              'x-cors-grida-api-key': PASS_CORS_KEY,
             },
             body: formBody,
           },

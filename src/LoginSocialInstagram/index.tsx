@@ -4,7 +4,7 @@
  * LoginSocialInstagram
  *
  */
-import { PASS_CORS_KEY } from 'helper/constants';
+//import { PASS_CORS_KEY } from 'helper/constants';
 import React, { memo, useCallback, useEffect } from 'react';
 import { objectType, IResolveParams } from '../';
 
@@ -28,7 +28,7 @@ interface Props {
 
 const INSTAGRAM_URL = 'https://api.instagram.com';
 const INSTAGRAM_API_URL = 'https://graph.instagram.com/';
-const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
+//const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
 
 export const LoginSocialInstagram = ({
   state = '',
@@ -59,11 +59,10 @@ export const LoginSocialInstagram = ({
   const getProfile = useCallback(
     (data: objectType) => {
       fetch(
-        `${PREVENT_CORS_URL}/${INSTAGRAM_API_URL}/me?fields=${fields}&access_token=${data.access_token}`,
+        `${INSTAGRAM_API_URL}/me?fields=${fields}&access_token=${data.access_token}`,
         {
           method: 'GET',
           headers: {
-            'x-cors-grida-api-key': PASS_CORS_KEY,
           },
         },
       )
@@ -91,9 +90,8 @@ export const LoginSocialInstagram = ({
         };
         const headers = new Headers({
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-cors-grida-api-key': PASS_CORS_KEY,
         });
-        fetch(`${PREVENT_CORS_URL}/${INSTAGRAM_URL}/oauth/access_token`, {
+        fetch(`${INSTAGRAM_URL}/oauth/access_token`, {
           method: 'POST',
           headers,
           body: new URLSearchParams(params),

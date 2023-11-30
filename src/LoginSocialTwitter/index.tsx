@@ -5,7 +5,7 @@
  * LoginSocialTwitter
  *
  */
-import { PASS_CORS_KEY } from 'helper/constants';
+//import { PASS_CORS_KEY } from 'helper/constants';
 import React, { memo, useCallback, useEffect } from 'react';
 import { IResolveParams, objectType } from '..';
 
@@ -27,7 +27,6 @@ interface Props {
 
 const TWITTER_URL: string = 'https://twitter.com';
 const TWITTER_API_URL: string = 'https://api.twitter.com';
-const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
 
 export const LoginSocialTwitter = ({
   client_id,
@@ -55,12 +54,11 @@ export const LoginSocialTwitter = ({
 
   const getProfile = useCallback(
     (data: objectType) => {
-      const url = `${PREVENT_CORS_URL}/${TWITTER_API_URL}/2/users/me?user.fields=${fields}`;
+      const url = `${TWITTER_API_URL}/2/users/me?user.fields=${fields}`;
       fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${data.access_token}`,
-          'x-cors-grida-api-key': PASS_CORS_KEY,
+          Authorization: `Bearer ${data.access_token}`
         },
       })
         .then(res => res.json())
@@ -84,13 +82,12 @@ export const LoginSocialTwitter = ({
           code_verifier: 'challenge',
         });
 
-        const requestOAuthURL = `${PREVENT_CORS_URL}/${TWITTER_API_URL}/2/oauth2/token`;
+        const requestOAuthURL = `${TWITTER_API_URL}/2/oauth2/token`;
         const data = await fetch(requestOAuthURL, {
           method: 'POST',
           body: details,
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'x-cors-grida-api-key': PASS_CORS_KEY,
+            'Content-Type': 'application/x-www-form-urlencoded'
           },
         })
           .then(data => data.json())

@@ -4,7 +4,6 @@
  * LoginSocialGoogle
  *
  */
-import { PASS_CORS_KEY } from 'helper/constants';
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { objectType, IResolveParams } from '../';
 
@@ -34,7 +33,7 @@ interface Props {
 // const JS_SRC = 'https://apis.google.com/js/api.js'
 const JS_SRC = 'https://accounts.google.com/gsi/client';
 const SCRIPT_ID = 'google-login';
-const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
+//const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
 const _window = window as any;
 
 const LoginSocialGoogle = ({
@@ -106,17 +105,13 @@ const LoginSocialGoogle = ({
       if (typeResponse === 'accessToken') {
         const headers = new Headers({
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-cors-grida-api-key': PASS_CORS_KEY,
           Authorization: 'Bearer ' + res.access_token,
         });
 
-        fetch(
-          `${PREVENT_CORS_URL}/https://www.googleapis.com/oauth2/v3/userinfo?alt=json`,
-          {
-            method: 'GET',
-            headers,
-          },
-        )
+        fetch(`https://www.googleapis.com/oauth2/v3/userinfo?alt=json`, {
+          method: 'GET',
+          headers,
+        })
           .then(response => response.json())
           .then(response => {
             const data: objectType = { ...res, ...response };

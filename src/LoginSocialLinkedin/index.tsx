@@ -4,7 +4,7 @@
  * LoginSocialLinkedin
  *
  */
-import { PASS_CORS_KEY } from 'helper/constants';
+//import { PASS_CORS_KEY } from 'helper/constants';
 import React, { memo, useCallback, useEffect } from 'react';
 import { IResolveParams, objectType } from '../';
 
@@ -26,7 +26,7 @@ interface Props {
 
 const LINKEDIN_URL: string = 'https://www.linkedin.com/oauth/v2';
 const LINKEDIN_API_URL: string = 'https://api.linkedin.com';
-const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
+//const PREVENT_CORS_URL: string = 'https://cors.bridged.cc';
 
 export const LoginSocialLinkedin = ({
   state = '',
@@ -99,10 +99,9 @@ export const LoginSocialLinkedin = ({
         };
         const headers = new Headers({
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-cors-grida-api-key': PASS_CORS_KEY,
         });
 
-        fetch(`${PREVENT_CORS_URL}/${LINKEDIN_URL}/accessToken`, {
+        fetch(`${LINKEDIN_URL}/accessToken`, {
           method: 'POST',
           headers,
           body: new URLSearchParams(params),
